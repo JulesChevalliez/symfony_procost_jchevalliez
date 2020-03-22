@@ -1,0 +1,40 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-users"></i>&nbsp;Ajout Projet</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path("main_homepage") }}"><i class="fa fa-home fa-lg"></i></a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path("main_projects") }}">Projets</a>
+            </li>
+            <li class="breadcrumb-item"> Ajout d'un projet</li>
+        </ul>
+    </div>
+    <div class="tile">
+        {{ form_start(formAdd) }}
+        <div class="form-group">
+            {{ form_errors(formAdd.name) }}
+            {{ form_label(formAdd.name) }}
+            {{ form_widget(formAdd.name, {'attr': {'class': 'form-control', 'placeholder': formAdd.name.vars.label}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_errors(formAdd.description) }}
+            {{ form_label(formAdd.description) }}
+            {{ form_widget(formAdd.description, {'attr': {'class': 'form-control', 'placeholder': formAdd.description.vars.label}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_errors(formAdd.selling_price) }}
+            {{ form_label(formAdd.selling_price) }}
+            {{ form_widget(formAdd.selling_price, {'attr': {'class': 'form-control', 'placeholder': formAdd.selling_price.vars.label}}) }}
+        </div>
+        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</a></button>
+        {{ form_end(formAdd) }}
+
+    </div>
+{% endblock %}
+

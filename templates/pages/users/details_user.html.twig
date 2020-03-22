@@ -1,0 +1,122 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-users"></i>&nbsp;{{ user.firstName }} {{ user.name }}</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path("main_homepage") }}"><i class="fa fa-home fa-lg"></i></a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('main_users') }}">Employés</a>
+            </li>
+            <li class="breadcrumb-item">{{ user.firstName }} {{ user.name }}</li>
+        </ul>
+    </div>
+    {% for message in app.flashes('succes') %}
+        <div class="alert alert-success" role="alert">
+            <button class="close" type="button" data-dismiss="alert">×</button>
+            <strong>{{ message }}</strong>
+
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="tile">
+
+                <h3 class="tile-title">Infos</h3>
+                <table class="table table-striped table-bordered table-sm">
+                    <tbody>
+                    <tr>
+                        <th>Prénom
+                        </td>
+                        <td>{{ user.firstName }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom
+                        </td>
+                        <td>{{ user.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email
+                        </td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Métier
+                        </td>
+                        <td>{{ user.job.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Coût horaire
+                        </td>
+                        <td>{{ user.cost }}€</td>
+                    </tr>
+                    <tr>
+                        <th>Date d'embauche
+                        </td>
+                        <td>{{ user.hiringDate | date('d M Y', "Europe/Paris") }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <a href="{{ path('user_edit', {'id' : user.id}) }}" class="btn btn-info">
+                    <i class="fa fa-pencil"></i>Modifier
+                </a>
+            </div>
+            <div class="tile">
+                <h3 class="title-title mb-4">Ajouter un temps</h3>
+                {{ form_start(formProd) }}
+                <div class="form-group">
+                    {{ form_errors(formProd.project) }}
+                    {{ form_label(formProd.project) }}
+                    {{ form_widget(formProd.project , {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_errors(formProd.hour_number) }}
+                    {{ form_label(formProd.hour_number) }}
+                    {{ form_widget(formProd.hour_number , {'attr': {'class': 'form-control', 'placeholder': formProd.hour_number.vars.label}}) }}
+                </div>
+                <div class="row">
+                    <div class="     col-md-8">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</a>
+                    </div>
+                </div>
+                {{ form_end(formProd) }}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="tile pb-5">
+                <h3 class="tile-title">Historique des temps de production</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Projet</th>
+                            <th>Temps</th>
+                            <th>Date de saisie</th>
+                            <th>Coût total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for prods in userProd %}
+                            <tr>
+                                <td>{{ prods.project.name }}</td>
+                                <td>{{ prods.hourNumber }}h</td>
+                                <td>{{ prods.creationDate.date|date('d M Y', "Europe/Paris") }}</td>
+                                <td>{{ prods.totalCost }}€</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <hr/>
+                <nav class="float-right">
+                    <div class="navigation">
+                        {{ knp_pagination_render(userProd) }}
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}

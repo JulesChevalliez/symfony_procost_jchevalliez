@@ -1,0 +1,40 @@
+security:
+  encoders:
+    App\Entity\User:
+      algorithm: auto
+
+  providers:
+    # used to reload user from session & other features (e.g. switch_user)
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: email
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      anonymous: lazy
+      guard:
+        authenticators:
+        - App\Security\LoginFormAuthenticator
+      logout:
+        path: app_logout
+        target: app_login
+        # where to redirect after logout
+        # target: app_any_route
+  access_denied_url: /login
+
+  access_control:
+  - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+  - { path: ^/details/[0-9]+, roles: [ROLE_MANAGER, IS_AUTHENTICATED_REMEMBERED] }
+  - { path: ^/users, roles: IS_AUTHENTICATED_REMEMBERED }
+  - { path: ^/edit/user/[0-9]+, roles: ROLE_MANAGER }
+  - { path: ^/add/user, roles: ROLE_MANAGER }
+  - { path: ^/projects, roles: IS_AUTHENTICATED_REMEMBERED }
+  - { path: ^/add/project, roles: ROLE_MANAGER }
+  - { path: ^/edit/project/[0-9]+, roles: ROLE_MANAGER }
+  - { path: ^/jobs, roles: IS_AUTHENTICATED_REMEMBERED }
+  - { path: ^/add/job, roles: ROLE_MANAGER }
+  - { path: ^/edit/job/[0-9]+, roles: ROLE_MANAGER }
+  - { path: ^/delete/job/[0-9]+, roles: ROLE_MANAGER }

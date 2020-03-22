@@ -1,0 +1,30 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-users"></i>&nbsp;Ajout Métier</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path("main_homepage") }}"><i class="fa fa-home fa-lg"></i></a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path("main_jobs") }}">Métiers</a>
+            </li>
+            <li class="breadcrumb-item"> Ajout d'un métier</li>
+        </ul>
+    </div>
+    <div class="tile">
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_errors(form.name) }}
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': form.name.vars.label}}) }}
+        </div>
+        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</a></button>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
+
